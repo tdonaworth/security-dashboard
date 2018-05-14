@@ -1,0 +1,10 @@
+version: "2"
+services:
+  %SERVICE_NAME%:
+    image: "%REGISTRY%/%SERVICE_NAME%:%IMAGE_TAG%"
+    ports:
+      - "8080"
+    volumes:
+      - /var/lib/docker/volumes/iqiesvol/_data:/app
+    labels:
+      KONG_MAPPING_UPSTREAM_URI: "/v1/example"
