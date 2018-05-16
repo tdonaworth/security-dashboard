@@ -1,16 +1,6 @@
 version: "2"
 services:
-  db:
-    image: postgres:9.5.10
-    environment:
-      - POSTGRES_PASSWORD=pass
-      - POSTGRES_DB=service
   app:
-    image: "iqies-service"
+    image: "owasp/zap2docker-stable"
     ports:
     - "8080:8080"
-    build:
-      context: ../../
-      dockerfile: ./automation/docker/test.Dockerfile
-    environment:
-      - DATABASE_URL=postgresql://postgres:pass@db:5432/service
