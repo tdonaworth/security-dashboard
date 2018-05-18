@@ -5,46 +5,31 @@ pipeline {
     label 'docker-agent'
   }
   environment {
-    DC_ARGS = '-f automation/docker/test.docker-compose.yaml'
+    TARGET_URL=https://sbx-iqies.hcqis.org/
   }
 
   stages {
     stage('setup'){
       steps{
 	// Start up the OWASP ZAP container
-        //sh "docker-compose $DC_ARGS up -d"
-	sh "docker run -u zap -p 2375:2375 -d owasp/zap2docker-bare zap.sh -daemon -port 2375 -host https://sbx-iqies.hcqis.org/"
-
-	// Install the zap-cli
-	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade zapcli"
-	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade git+https://github.com/Grunny/zap-cli.git"
-
-	// Start ZAP on default port 8080
-	// sh "docker-compose $DC_ARGS exec -T zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true"
-
-	//
+	CONTAINER_ID=$(docker run -u zap -p 2375:2375 -d owasp/zap2docker-weekly zap.sh -daemon -port 2375 -host 127.0.0.1 -config api.disablekey=true -config scanner.attackOnStart=true -config view.mode=attack -config connection.dnsTtlSuccessfulQueries=-1 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true)
         }
     }
     stage('test'){
       steps{
 	sh "docker ps"
-        // Execute ZAP quick-scan which includes spider and active scan
-	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
-	//sh "docker-compose $DC_ARGS exec -u zap -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"  
-	//sh "docker-compose $DC_ARGS exec -T /bin/sh -c 'cd /zap'"
-	//sh "docker-compose $DC_ARGS exec -T app ls"
-	     
-	//sh "/bin/sh -c 'cd
-	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
+        docker exec $CONTAINER_ID zap-cli -p 2375 status -t 120 && docker exec $CONTAINER_ID zap-cli -p 2375 open-url $TARGET_URL
+	docker exec $CONTAINER_ID zap-cli -p 2375 spider $TARGET_URL
+	docker exec $CONTAINER_ID zap-cli -p 2375 active-scan -r $TARGET_URL
+	docker exec $CONTAINER_ID zap-cli -p 2375 alerts
         }
     }
   }
   post {
     always {
 	// Bring the ZAP container down after the scan
-	sh 'docker-compose -f automation/docker/test.docker-compose.yaml down'
-
-	// Archive ZAP Report - still TBD	
+	docker logs $CONTAINER_ID
+	docker stop $CONTAINER_ID	
     }
     success {
       echo 'alert successful build'
