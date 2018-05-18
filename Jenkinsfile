@@ -12,7 +12,8 @@ pipeline {
     stage('setup'){
       steps{
 	// Start up the OWASP ZAP container
-        sh "docker-compose $DC_ARGS up -d"
+        //sh "docker-compose $DC_ARGS up -d"
+	sh "docker run -u zap -p 2375:2375 -d owasp/zap2docker-bare zap.sh -daemon -port 2375 -host https://sbx-iqies.hcqis.org/"
 
 	// Install the zap-cli
 	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade zapcli"
@@ -31,7 +32,7 @@ pipeline {
 	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
 	//sh "docker-compose $DC_ARGS exec -u zap -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"  
 	//sh "docker-compose $DC_ARGS exec -T /bin/sh -c 'cd /zap'"
-	sh "docker-compose $DC_ARGS exec -T app ls"
+	//sh "docker-compose $DC_ARGS exec -T app ls"
 	     
 	//sh "/bin/sh -c 'cd
 	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
