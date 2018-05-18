@@ -2,7 +2,7 @@
 
 pipeline {
   agent {
-    label 'owasp/zap2docker-bare'
+    label 'docker-agent'
   }
   environment {
     DC_ARGS = '-f automation/docker/test.docker-compose.yaml'
