@@ -21,10 +21,10 @@ pipeline {
     }
     stage('test'){
       steps{
-        sh "docker exec 52b661130cd7 zap-cli -p 2375 status -t 120 && docker exec $CONTAINER_ID zap-cli -p 2375 open-url $TARGET_URL"
-	sh "docker exec 52b661130cd7 zap-cli -p 2375 spider $TARGET_URL"
-	sh "docker exec 52b661130cd7 zap-cli -p 2375 active-scan -r $TARGET_URL"
-	sh "docker exec 52b661130cd7 zap-cli -p 2375 alerts"
+        sh "docker exec 52b661130cd7 zap-cli -p 2375 status -t 120 -v && docker exec 52b661130cd7 zap-cli -p 2375 -v open-url https://sbx-iqies.hcqis.org"
+	sh "docker exec 52b661130cd7 zap-cli -p 2375 -v spider https://sbx-iqies.hcqis.org"
+	sh "docker exec 52b661130cd7 zap-cli -p 2375 -v active-scan -r https://sbx-iqies.hcqis.org"
+	sh "docker exec 52b661130cd7 zap-cli -p 2375 -v alerts"
         }
     }
   }
