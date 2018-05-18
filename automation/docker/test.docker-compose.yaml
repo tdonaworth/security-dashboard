@@ -1,4 +1,4 @@
 version: "2"
 services:
-  app:
+  zap:
     image: "owasp/zap2docker-bare"
