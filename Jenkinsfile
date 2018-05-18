@@ -12,7 +12,7 @@ pipeline {
     stage('setup'){
       steps{
 	// Start up the OWASP ZAP container
-        sh "docker-compose $DC_ARGS up -d zap"
+        sh "docker-compose $DC_ARGS up -d"
 
 	// Install the zap-cli
 	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade zapcli"
