@@ -1,6 +1,7 @@
 version: "2"
 services:
   app:
+    build: zap
     image: "owasp/zap2docker-bare"
     ports:
     - "8080:8080"
