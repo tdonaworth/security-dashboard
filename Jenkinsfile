@@ -15,8 +15,8 @@ pipeline {
         sh "docker-compose $DC_ARGS up -d"
 
 	// Install the zap-cli
-	sh "docker-compose $DC_ARGS exec -T pip install --upgrade zapcli"
-	sh "docker-compose $DC_ARGS exec -T pip install --upgrade git+https://github.com/Grunny/zap-cli.git"
+	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade zapcli"
+	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade git+https://github.com/Grunny/zap-cli.git"
 
 	// Start ZAP on default port 8080
 	sh "docker-compose $DC_ARGS exec -T zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true"
