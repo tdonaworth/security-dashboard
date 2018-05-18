@@ -5,7 +5,7 @@ pipeline {
     label 'docker-agent'
   }
   environment {
-    TARGET_URL=https://sbx-iqies.hcqis.org/
+    TARGET_URL='https://sbx-iqies.hcqis.org'
   }
 
   stages {
