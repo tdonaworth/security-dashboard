@@ -33,6 +33,8 @@ pipeline {
     always {
 	// Bring the ZAP container down after the scan
 	sh "docker logs $CONTAINER_NAME"
+	sh "docker stop 12299a74f474"
+	sh "docker stop 0715d680a06a"  
 	sh "docker stop $CONTAINER_NAME"	
     }
     success {
