@@ -21,18 +21,18 @@ pipeline {
     }
     stage('test'){
       steps{
-        sh "docker exec -d zap zap-cli -p 2375 status -t 120 && docker exec $CONTAINER_ID zap-cli -p 2375 open-url $TARGET_URL"
-	sh "docker exec -d zap zap-cli -p 2375 spider $TARGET_URL"
-	sh "docker exec -d zap zap-cli -p 2375 active-scan -r $TARGET_URL"
-	sh "docker exec -d zap zap-cli -p 2375 alerts"
+        sh "docker exec -d 52b661130cd7 zap-cli -p 2375 status -t 120 && docker exec $CONTAINER_ID zap-cli -p 2375 open-url $TARGET_URL"
+	sh "docker exec -d 52b661130cd7 zap-cli -p 2375 spider $TARGET_URL"
+	sh "docker exec -d 52b661130cd7 zap-cli -p 2375 active-scan -r $TARGET_URL"
+	sh "docker exec -d 52b661130cd7 zap-cli -p 2375 alerts"
         }
     }
   }
   post {
     always {
 	// Bring the ZAP container down after the scan
-	sh "docker logs $CONTAINER_NAME"  
-	sh "docker stop $CONTAINER_NAME"	
+	sh "docker logs 52b661130cd7"  
+	//sh "docker stop $CONTAINER_NAME"	
     }
     success {
       echo 'Successful build!'
