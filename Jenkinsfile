@@ -32,7 +32,8 @@ pipeline {
     always {
 	// Bring the ZAP container down after the scan
 	//sh "docker logs 52b661130cd7"  
-	//sh "docker stop $CONTAINER_NAME"	
+	//sh "docker stop $CONTAINER_NAME"
+	sh "docker ps"
     }
     success {
       echo 'Successful build!'
