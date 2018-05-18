@@ -2,7 +2,6 @@
 
 pipeline {
   agent {
-    //label 'docker-agent'
     label 'owasp/zap2docker-bare'
   }
   environment {
