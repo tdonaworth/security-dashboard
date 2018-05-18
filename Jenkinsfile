@@ -12,7 +12,7 @@ pipeline {
     stage('setup'){
       steps{
 	// Start up the OWASP ZAP container
-        sh "docker-compose $DC_ARGS up -d"
+        sh "docker-compose $DC_ARGS up -d zap"
 
 	// Install the zap-cli
 	// sh "docker-compose $DC_ARGS exec -T pip install --upgrade zapcli"
@@ -31,6 +31,7 @@ pipeline {
 	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
 	//sh "docker-compose $DC_ARGS exec -u zap -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"  
 	//sh "docker-compose $DC_ARGS exec -T /bin/sh -c 'cd /zap'"
+	sh "docker-compose $DC_ARGS exec -T zap ls"
 	     
 	//sh "/bin/sh -c 'cd
 	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
