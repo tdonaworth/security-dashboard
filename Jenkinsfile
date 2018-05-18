@@ -21,10 +21,10 @@ pipeline {
     stage('test'){
       steps{
 	sh "docker ps" 
-        sh "docker exec -d zap zap-cli -p 2375 status -t 120 && docker exec $CONTAINER_ID zap-cli -p 2375 open-url $TARGET_URL"
-	sh "docker exec -d zap zap-cli -p 2375 spider $TARGET_URL"
-	sh "docker exec -d zap zap-cli -p 2375 active-scan -r $TARGET_URL"
-	sh "docker exec -d zap zap-cli -p 2375 alerts"
+        //sh "docker exec -d zap zap-cli -p 2375 status -t 120 && docker exec $CONTAINER_ID zap-cli -p 2375 open-url $TARGET_URL"
+	//sh "docker exec -d zap zap-cli -p 2375 spider $TARGET_URL"
+	//sh "docker exec -d zap zap-cli -p 2375 active-scan -r $TARGET_URL"
+	//sh "docker exec -d zap zap-cli -p 2375 alerts"
         }
     }
   }
