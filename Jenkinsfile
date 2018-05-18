@@ -25,9 +25,11 @@ pipeline {
         }
     }
     stage('test'){
-      steps{
+      steps{/zap
         // Execute ZAP quick-scan which includes spider and active scan
-	sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
+	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
+	sh "docker-compose $DC_ARGS exec -T app zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"    
+	//sh "docker-compose $DC_ARGS exec -T zap-cli quick-scan 'https://sbx-iqies.hcqis.org'"
         }
     }
   }
