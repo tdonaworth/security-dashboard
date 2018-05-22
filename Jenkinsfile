@@ -22,10 +22,13 @@ pipeline {
     }
     stage('test'){
       steps{
+	/*
         sh "docker exec 2001d237fdca zap-cli -p 2375 status -t 120 -v && docker exec 2001d237fdca zap-cli -p 2375 -v open-url https://sbx-iqies.hcqis.org"
 	sh "docker exec 2001d237fdca zap-cli -p 2375 -v spider https://sbx-iqies.hcqis.org"
 	sh "docker exec 2001d237fdca zap-cli -p 2375 -v active-scan -r https://sbx-iqies.hcqis.org"
 	sh "docker exec 2001d237fdca zap-cli -p 2375 -v alerts"
+	*/
+	sh "docker ps"
         }
     }
   }
