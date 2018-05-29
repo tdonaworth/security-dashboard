@@ -14,8 +14,7 @@ pipeline {
       steps{
 	sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-bare zap.sh -daemon -host 0.0.0.0 -port 8090"
 	sh 'docker ps'
-        // sh "zap.sh -daemon -port 8080 -host 0.0.0.0 -config api.disablekey=true"
-        // sh "zap-cli quick-scan --spider -r http://ventera.com"
+        sh "docker exec zap zap-cli quick-scan --spider -r http://ventera.com"
       }
     }
   }
