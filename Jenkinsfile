@@ -21,7 +21,7 @@ pipeline {
   }
   post {
     always {
-      sh 'docker rm --force zap_container'
+      sh 'docker rm --force zap'
       sh 'docker ps'
     }
     success {
