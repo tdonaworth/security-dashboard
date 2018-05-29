@@ -12,8 +12,11 @@ pipeline {
       }
       */
       steps{
-	sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-bare zap.sh -daemon -host 0.0.0.0 -port 8090"
+	//sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-bare zap.sh -daemon -host 0.0.0.0 -port 8090"
+	// Use ZAP stable, as bare does not have ZAP CLI
+	sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-stable"
 	sh 'docker ps'
+	sh 'docker exec zap zap-cli open-url http://google.com/'
 	sh 'docker exec zap sh -c "cd /zap && ls"'
 	//sh 'docker exec -w /zap zap dir'
         //sh "docker exec zap zap-cli quick-scan --spider -r http://ventera.com"
