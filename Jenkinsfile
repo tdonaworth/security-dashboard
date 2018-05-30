@@ -35,7 +35,7 @@ pipeline {
             // Output HTML Report
             sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 report --output findings.html --output-format html'
             sh 'docker exec -e ZAP_PORT=8090 zap ls'
-            sh 'docker cp zap findings.html .'
+            sh 'docker cp zap:findings.html .'
 	  }
 	}
       }
