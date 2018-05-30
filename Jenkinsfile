@@ -26,10 +26,7 @@ pipeline {
 	script {
           try {
             // Execute OWASP ZAP tests
-            sh 'docker exec zap zap-cli -p 8090 open-url $TARGET_URL'      
-	    sh 'docker exec zap zap-cli -p 8090 active-scan -r $TARGET_URL'
             sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r $TARGET_URL' 
-	    sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
     	  } catch (err) {
             // Problems found, but no reason to fail the build
             echo "OWASP ZAP issues security issues found!"
