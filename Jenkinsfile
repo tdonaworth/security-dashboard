@@ -17,7 +17,7 @@ pipeline {
 	// Use ZAP stable, as bare does not have ZAP CLI
 	//sh "docker run --name zap -d -u zap -it owasp/zap2docker-stable"
 	sh 'docker ps'
-	sh 'sleep(60)'
+	sh 'sleep 60'
 	//sh 'docker exec zap nohup sh -c "cd /zap && zap.sh -daemon -config api.disablekey=true" &'
 	/*
 	sh 'docker exec zap zap-cli -p 8090 open-url https://sbx-iqies.hcqis.org'      
