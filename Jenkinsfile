@@ -13,14 +13,15 @@ pipeline {
       */
       steps{
 	sh 'docker ps'
-	//sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-stable zap.sh -daemon -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
+	sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-stable zap.sh -daemon -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
 	// Use ZAP stable, as bare does not have ZAP CLI
 	//sh "docker run --name zap -d -u zap -it owasp/zap2docker-stable"
 	sh 'docker ps'
 	sh 'sleep 60'
 	//sh 'docker exec zap nohup sh -c "cd /zap && zap.sh -daemon -config api.disablekey=true" &'
-	/*
+	
 	sh 'docker exec zap zap-cli -p 8090 open-url https://sbx-iqies.hcqis.org'      
+	/*
 	sh 'docker exec zap zap-cli -p 8090 active-scan -r https://sbx-iqies.hcqis.org'
         sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r https://sbx-iqies.hcqis.org' 
 	sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
