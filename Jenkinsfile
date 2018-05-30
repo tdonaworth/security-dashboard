@@ -14,16 +14,13 @@ pipeline {
 	//sh 'docker exec zap sh /bin/bash -c "export ZAP_PORT=8090"'
 	sh 'docker version'
 	sh 'docker exec zap sh -c "export ZAP_PORT=8090"'
-	sh 'docker exec zap printenv'
+	//sh 'docker exec zap printenv'
 	//sh 'docker exec zap zap-cli -p 8090 status'
 	// Give the ZAP proxy server time to start
-	sh 'sleep 60'
-	//sh 'docker exec zap sh -c "cd /zap && ls"'
-	//sh 'docker exec -w /zap zap dir'
-	      while (true){
-	      	sh 'docker ps'
-	      }
-	
+	retry(10) {
+           sh 'docker exec zap zap-cli -p 8090 status'
+           sleep 10
+        }
       }
     }
     stage('test'){
