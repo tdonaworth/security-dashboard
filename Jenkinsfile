@@ -22,15 +22,17 @@ pipeline {
     }
     stage('test'){
       steps{
-        try {
-          sh 'docker exec zap zap-cli -p 8090 open-url https://sbx-iqies.hcqis.org'      
-	  sh 'docker exec zap zap-cli -p 8090 active-scan -r https://sbx-iqies.hcqis.org'
-          sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r https://sbx-iqies.hcqis.org' 
-	  sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
-    	} catch (err) {
-          echo "Failed: ${err}"
-    	} finally {
-          echo "Done"
+	script {
+          try {
+            sh 'docker exec zap zap-cli -p 8090 open-url https://sbx-iqies.hcqis.org'      
+	    sh 'docker exec zap zap-cli -p 8090 active-scan -r https://sbx-iqies.hcqis.org'
+            sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r https://sbx-iqies.hcqis.org' 
+	    sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
+    	  } catch (err) {
+            echo "Failed: ${err}"
+    	  } finally {
+            echo "Done"
+	  }
 	}
       }
     }
