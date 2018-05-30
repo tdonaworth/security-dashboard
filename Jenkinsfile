@@ -18,7 +18,7 @@ pipeline {
 	//sh "docker run --name zap -d -u zap -it owasp/zap2docker-stable"
 	sh 'docker ps'
 	//sh 'docker exec zap nohup sh -c "cd /zap && zap.sh -daemon -config api.disablekey=true" &'
-	sh 'docker exec zap zap-cli open-url https://nexus.hcqis.org:8443'
+	//sh 'docker exec zap zap-cli open-url https://nexus.hcqis.org:8443'
 	//sh 'docker exec zap sh -c "cd /zap && ls"'
 	//sh 'docker exec -w /zap zap dir'
         //sh "docker exec zap zap-cli quick-scan --spider -r http://ventera.com"
@@ -27,7 +27,7 @@ pipeline {
   }
   post {
     always {
-      sh 'docker rm --force zap'
+      //sh 'docker rm --force zap'
       sh 'docker ps'
     }
     success {
