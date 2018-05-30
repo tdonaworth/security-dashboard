@@ -17,7 +17,7 @@ pipeline {
 	// Use ZAP stable, as bare does not have ZAP CLI
 	sh "docker run --name zap -d -u zap -it owasp/zap2docker-stable"
 	sh 'docker ps'
-	sh 'docker exec zap sh -c "cd /zap && zap.sh -d -daemon -config api.disablekey=true"'
+	sh 'docker exec zap sh -c "cd /zap && zap.sh -daemon -config api.disablekey=true &"'
 	sh 'docker exec zap zap-cli open-url http://google.com/'
 	//sh 'docker exec zap sh -c "cd /zap && ls"'
 	//sh 'docker exec -w /zap zap dir'
