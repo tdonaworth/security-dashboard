@@ -25,9 +25,12 @@ pipeline {
       steps{
 	script {
           try {
-            // Execute OWASP ZAP tests
+            // Execute OWASP ZAP
+            // Quick Scan will open the URL, run an active scan, and then execute spider scans
             sh 'docker exec zap zap-cli -p 8090 quick-scan --spider --ajax-spider -r $TARGET_URL'
 	    /*
+	    // Use either the Active Scan (below) or the Quick Scan command (above)
+	    // The commands below allow for more configuration than what Quick Scan can provide
             sh 'docker exec zap zap-cli -p 8090 -v open-url $TARGET_URL'      
 	    sh 'docker exec zap zap-cli -p 8090 -v active-scan -r $TARGET_URL'
 	    sh 'docker exec zap zap-cli -p 8090 -v spider -r $TARGET_URL'
