@@ -31,7 +31,7 @@ pipeline {
 	    echo "Failed: ${err}"
     	  } finally {
             // Output HTML Report
-            sh 'docker exec zap zap-cli -p 8090 report --output findings.html --output-format html
+            sh 'docker exec zap zap-cli -p 8090 report --output findings.html --output-format html'
 	  }
 	}
       }
