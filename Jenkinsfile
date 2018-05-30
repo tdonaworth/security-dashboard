@@ -17,7 +17,7 @@ pipeline {
 	sh 'docker exec -e ZAP_PORT=8090 zap'
 	// Give the ZAP proxy server time to start
 	retry(20) {
-          sh 'docker exec zap zap-cli -p 8090 status'
+          sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 status'
         }
       }
     }
@@ -26,17 +26,17 @@ pipeline {
 	script {
           try {
             // Execute OWASP ZAP tests
-            sh 'docker exec zap zap-cli -p 8090 open-url $TARGET_URL'      
-	    sh 'docker exec zap zap-cli -p 8090 active-scan -r $TARGET_URL'
-            sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r $TARGET_URL' 
-	    sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
+            sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 open-url $TARGET_URL'      
+	    sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 active-scan -r $TARGET_URL'
+            sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 quick-scan --spider -r $TARGET_URL' 
+	    sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 alerts -l Medium'
     	  } catch (err) {
             echo "OWASP ZAP issues security issues found!"
 	    echo "Failed: ${err}"
     	  } finally {
             // Output HTML Report
-            sh 'docker exec zap zap-cli -p 8090 report --output findings.html --output-format html'
-            sh 'docker exec zap ls'
+            sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 report --output findings.html --output-format html'
+            sh 'docker exec -e ZAP_PORT=8090 zap ls'
 	  }
 	}
       }
@@ -44,6 +44,7 @@ pipeline {
   }
   post {
     always {
+      sh 'docker ps'
       sh 'docker rm --force zap'
       sh 'docker ps'
     }
