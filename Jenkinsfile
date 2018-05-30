@@ -12,7 +12,10 @@ pipeline {
 	sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-stable zap.sh -daemon -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
 	// Configure port for Docker Healthcheck
 	//sh 'docker exec zap sh /bin/bash -c "export ZAP_PORT=8090"'
+	sh 'docker version'
 	sh 'docker exec zap sh -c "export ZAP_PORT=8090"'
+	sh 'docker exec zap printenv'
+	sh 'docker exec zap zap-cli -p 8090 status'
 	// Give the ZAP proxy server time to start
 	sh 'sleep 60'
 	//sh 'docker exec zap sh -c "cd /zap && ls"'
