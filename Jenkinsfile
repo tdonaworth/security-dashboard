@@ -18,19 +18,20 @@ pipeline {
 	//sh "docker run --name zap -d -u zap -it owasp/zap2docker-stable"
 	sh 'docker ps'
 	//sh 'docker exec zap nohup sh -c "cd /zap && zap.sh -daemon -config api.disablekey=true" &'
+	/*
 	sh 'docker exec zap zap-cli -p 8090 open-url https://sbx-iqies.hcqis.org'      
 	sh 'docker exec zap zap-cli -p 8090 active-scan -r https://sbx-iqies.hcqis.org'
         sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r https://sbx-iqies.hcqis.org' 
 	sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
+	*/
 	//sh 'docker exec zap sh -c "cd /zap && ls"'
 	//sh 'docker exec -w /zap zap dir'
-        //sh "docker exec zap zap-cli quick-scan --spider -r http://ventera.com"
       }
     }
   }
   post {
     always {
-      //sh 'docker rm --force zap'
+      sh 'docker rm --force zap'
       sh 'docker ps'
     }
     success {
