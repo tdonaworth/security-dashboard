@@ -35,6 +35,7 @@ pipeline {
             // Output HTML Report
             sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 report --output findings.html --output-format html'
             sh 'docker exec -e ZAP_PORT=8090 zap ls'
+            sh 'docker cp zap findings.html .'
 	  }
 	}
       }
@@ -42,7 +43,7 @@ pipeline {
   }
   post {
     always {
-      sh 'docker ps'
+      archiveArtifacts(artifacts: 'findings.html', allowEmptyArchive: true)
       sh 'docker rm --force zap'
       sh 'docker ps'
     }
