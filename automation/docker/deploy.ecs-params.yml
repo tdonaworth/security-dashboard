@@ -1,7 +1,0 @@
-version: 1
-task_definition:
-  ecs_network_mode: bridge
-  task_role_arn: arn:aws:iam::346776704253:role/consulClientRole
-  task_execution_role: arn:aws:iam::346776704253:role/consulClientRole
-  task_size:
-    mem_limit: 512
