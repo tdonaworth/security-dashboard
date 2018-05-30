@@ -6,7 +6,7 @@ pipeline {
   }
   environment {
     OUTPUT_FILE = 'findings.html'
-    TARGET_URL = 'https://sbx-iqies.hcqis.org/providers' 
+    TARGET_URL = 'https://sbx-iqies.hcqis.org' 
   }
 
   stages {
