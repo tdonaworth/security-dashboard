@@ -5,14 +5,15 @@ pipeline {
     label 'docker-agent'
   }
   environment {
-    TARGET_URL = 'https://sbx-iqies.hcqis.org/providers'
+    OUTPUT_FILE = 'findings.html'
+    TARGET_URL = 'https://sbx-iqies.hcqis.org/providers' 
   }
 
   stages {
     stage('setup'){
       steps{
 	// We must use ZAP stable, as bare does not have ZAP CLI
-	sh "docker run --name zap -d -u zap -p 8090:8090 -i owasp/zap2docker-stable zap.sh -daemon -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
+	sh "docker run --name zap -d -u zap -p 8090:8090 -i -e ZAP_PORT=8090 owasp/zap2docker-stable zap.sh -daemon -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true"
 	// Give the ZAP proxy server time to start
 	retry(20) {
           sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 status'
@@ -24,18 +25,17 @@ pipeline {
 	script {
           try {
             // Execute OWASP ZAP tests
-            sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 open-url $TARGET_URL'      
-	    sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 active-scan -r $TARGET_URL'
-            sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 quick-scan --spider -r $TARGET_URL' 
-	    sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 alerts -l Medium'
+            sh 'docker exec zap zap-cli -p 8090 open-url $TARGET_URL'      
+	    sh 'docker exec zap zap-cli -p 8090 active-scan -r $TARGET_URL'
+            sh 'docker exec zap zap-cli -p 8090 quick-scan --spider -r $TARGET_URL' 
+	    sh 'docker exec zap zap-cli -p 8090 alerts -l Medium'
     	  } catch (err) {
             echo "OWASP ZAP issues security issues found!"
 	    echo "Failed: ${err}"
     	  } finally {
             // Output HTML Report
-            sh 'docker exec -e ZAP_PORT=8090 zap zap-cli -p 8090 report --output findings.html --output-format html'
-            sh 'docker exec -e ZAP_PORT=8090 zap pwd'
-            sh 'docker cp zap:findings.html .'
+            sh 'docker exec zap zap-cli -p 8090 report --output $OUTPUT_FILE --output-format html'
+            sh 'docker cp zap:/zap/$OUTPUT_FILE .'
 	  }
 	}
       }
@@ -43,7 +43,8 @@ pipeline {
   }
   post {
     always {
-      archiveArtifacts(artifacts: 'findings.html', allowEmptyArchive: true)
+      archiveArtifacts(artifacts: '$OUTPUT_FILE', allowEmptyArchive: true)
+      sh 'docker ps'
       sh 'docker rm --force zap'
       sh 'docker ps'
     }
