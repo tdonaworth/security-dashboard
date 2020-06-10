@@ -1,0 +1,16 @@
+STOP ALL RUNNING CONTAINERS
+sudo docker container stop $(sudo docker container list -q)
+sudo docker container rm $(sudo docker container ps -aq)
+sudo docker image rm $(sudo docker image ls -q)
+sudo docker image ls
+
+sudo docker image build -t swagger-local:latest /home/QNET.QUALNET.ORG/ek1815/development
+#sudo docker run -it swagger-local:latest bash
+sudo docker image ls
+sudo docker run -d -v /home/QNET.QUALNET.ORG/ek1815/development:/usr/src/app -p 4500:4500 swagger-local:latest
+sudo docker run -d -p 4500:4500 swagger-local:latest
+sudo docker run -d -p 4600:8080 -e API_URL="http://10.137.177.242:4500/patientassessmenthha.json" swaggerapi/swagger-ui
+
+http://10.137.177.242:4500/
+
+http://10.137.177.242:4600/
