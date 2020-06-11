@@ -1,5 +1,5 @@
-# cd /home/QNET.QUALNET.ORG/ek1815/development
-# sudo docker image build -t swagger-local:latest /home/QNET.QUALNET.ORG/ek1815/development
+# cd /home/QNET.QUALNET.ORG/ek1815/swagger/iqies-security/swagger 
+# sudo docker image build -t swagger-local:latest /home/QNET.QUALNET.ORG/ek1815/swagger/iqies-security/swagger 
 # sudo docker image ls
 # sudo docker run -p 4500:4500 swagger-local:latest
 # sudo docker run -p 4600:8080 -e API_URL="http://10.137.177.242:4500/patientassessmenthha.json" swaggerapi/swagger-ui
