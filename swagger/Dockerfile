@@ -8,16 +8,24 @@
 FROM node:14.4.0-slim
 
 # Create app directory
-WORKDIR /usr/src/app
-ADD getOpenApiJson.sh /usr/src/app/
-CMD chmomd +x /usr/src/app/getOpenApiJson.sh
+WORKDIR /swagger
+ADD getOpenApiJson.sh /swagger
+CMD chmomd +x /swagger/getOpenApiJson.sh
 RUN apt-get update
-RUN apt-get install -y procps
+RUN apt-get -y install -y procps
+
+RUN apt-get -y install cron
+COPY myCron /etc/cron.d/myCron
+RUN chmod 0744 /etc/cron.d/myCron
+RUN crontab /etc/cron.d/myCron
+RUN touch /var/log/cron.log
+#CMD cron
+
 RUN apt-get -y install python3.5
 CMD python3.5 --version
 
 RUN apt-get -y install curl
-RUN /usr/src/app/getOpenApiJson.sh
+RUN /swagger/getOpenApiJson.sh
 RUN npm install -g http-server
 EXPOSE 4500
-CMD http-server --port 4500 --cors
+CMD cron && http-server --port 4500 --cors
