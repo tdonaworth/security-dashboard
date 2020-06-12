@@ -13,8 +13,8 @@ sudo docker run -d --name security-openapi -p 4500:4500 security-openapi:latest
 sudo docker container ps -a | grep security-openapi:latest
 sudo docker exec -it security-openapi /bin/bash
 
-
-sudo docker run -d -p 4600:8080 -e API_URL="http://10.137.177.242:4500/patientassessmenthha.json" swaggerapi/swagger-ui
+sudo docker container stop security-swaggerui
+sudo docker run -d --name security-swaggerui -p 4600:8080 -e API_URL="http://10.137.177.242:4500/patientassessmenthha.json" swaggerapi/swagger-ui
 
 From browser do http://10.137.177.242:4600/
 
