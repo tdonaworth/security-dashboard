@@ -5,11 +5,14 @@ sudo docker image rm $(sudo docker image ls -q)
 sudo docker image ls
 
 cd /home/QNET.QUALNET.ORG/ek1815/swagger/iqies-security/swagger
-sudo docker image build -t swagger-local:latest /home/QNET.QUALNET.ORG/ek1815/swagger/iqies-security/swagger
+sudo docker container stop security-openapi
+sudo docker container rm   security-openapi
+sudo docker image build -t security-openapi:latest /home/QNET.QUALNET.ORG/ek1815/swagger/iqies-security/swagger
 sudo docker image ls
-sudo docker run -d -p 4500:4500 swagger-local:latest
-sudo docker container ps -a | grep swagger-local:latest
-sudo docker exec -it ccccccccccc /bin/bash
+sudo docker run -d --name security-openapi -p 4500:4500 security-openapi:latest
+sudo docker container ps -a | grep security-openapi:latest
+sudo docker exec -it security-openapi /bin/bash
+
 
 sudo docker run -d -p 4600:8080 -e API_URL="http://10.137.177.242:4500/patientassessmenthha.json" swaggerapi/swagger-ui
 
