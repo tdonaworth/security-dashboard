@@ -1,0 +1,4 @@
+*.json
+services.txt
+.idea
+.DS_Store
