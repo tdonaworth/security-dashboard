@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Services</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Github</th>
+                            <th>OpenAPI (Authz)</th>
+                            <th>OpenAPI Cache</th>
+                            <th>Created</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Github</th>
+                            <th>OpenAPI (Authz)</th>
+                            <th>OpenAPI Cache</th>
+                            <th>Created</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for s in services %}
+                        <tr>
+                            <td>{{ s['name'] }}</td>
+                            <td><a href="{{ s['github'] }}">Github Repo</a></td>
+                            <td><a href="{{ s['openapi'] }}">OpenApi (requires authz)</a></td>
+                            <td><a href="{{ s['openapi_cache'] }}">OpenApi Cache (no authz)</a></td>
+                            <td>{{ s['created_at'] }}</td>
+                            <td>{{ s['updated_at'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

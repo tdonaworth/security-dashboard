@@ -4,20 +4,23 @@ import json
 import re
 #from github import Github
 
+DIR = "/swagger/output"
+
 def main():
     # Need to work out the proper repo for this, as each repo gives different results (user or org) 
-    url = "https://git.hcqis.org/api/v3/user/repos?type=all"
-    #url = "https://git.hcqis.org/api/v3/orgs/iQIES/repos"
+    #url = "https://git.hcqis.org/api/v3/user/repos?"
+    url = "https://git.hcqis.org/api/v3/orgs/iQIES/repos?per_page=3000"
 
     payload = {}
-    headers = {'Authorization': 'token ' + os.getenv('GITHUB_TOKEN')}
+    headers = {'Authorization': 'token 4299cb0fa44f9a3a172581c6e4190fa9cf00c008'}
 
     response = requests.request("GET", url, headers=headers, data = payload)
     if(response.status_code == 200):
         services = filter_services(response.text)
         service_names = list(l['name'] for l in services)
-        write_services(service_names) #writes out a txt file with all service names
-        write_openapis(service_names)
+        write_services(service_names) # writes out a txt file with all service names
+        write_openapis(service_names) # writes out <service_name>.json openapi files
+        write_service_json(services) # writes out service.json with details on the services
         #print(services)
     else:
         print('Something bad happened: ' + response.text)
@@ -30,9 +33,28 @@ def filter_services(input):
     return services
     
 
+def write_service_json(input=()):
+    services = []
+    for s in input:
+        service_name = s['name'].replace('iqies','').replace('service','').replace('-','').strip()
+        service = { "name":s['name'], \
+                    "created_at":s['created_at'], \
+                    "updated_at":s['updated_at'], \
+                    "github":s['html_url'], \
+                    "openapi":"https://test2-iqies.hcqis.org/api/{}/openapi.json".format(service_name), \
+                    "openapi_cache":"http://10.137.177.242:4500/{}.json".format(service_name) \
+                }
+        #print(service)
+        services.append(service)
+    
+    with open("{}{}services.json".format(os.getcwd(),DIR), "w") as json_file:
+        json.dump(services, json_file)
+        
+
+
 def write_services(input = ()):
-    dir = "/swagger"
-    f = open(os.getcwd() + dir + "/services.txt", "w")
+    
+    f = open(os.getcwd() + DIR + "/services.txt", "w")
     for i in input:
         name = i.replace('iqies', '').replace('service', '').replace('-','').strip()
         #print(name)
@@ -47,12 +69,12 @@ def write_openapis(input = ()):
         payload = {}
         kongToken = authenticate()
         headers = {'Content-Type': 'application/json'}
-        cookies = {'iqies-token':kongToken}
+        cookies = {'iqies-token': kongToken}
         response = requests.request("GET", url, headers=headers, data = json.dumps(payload), cookies= cookies)
         #print(response)
         if(response.status_code == 200):
-            print(response.text)
-            f = open("{}/swagger/{}.json".format(os.getcwd(),service), "w")
+            #print(response.text)
+            f = open("{}{}/{}.json".format(os.getcwd(),DIR,service), "w")
             f.write(response.text)
 
 

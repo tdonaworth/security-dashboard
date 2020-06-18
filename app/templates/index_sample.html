@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        {% extends "bootstrap/base.html" %}
+        {% if title %}
+        <title>{{ title }} - Micro Services</title>
+        {% else %}
+        <title>Micro Services Reference</title>
+        {% endif %}
+    </head>
+    <body>
+        {% for s in services %}
+        <div>{{s.name}} - <a href="{{s.github}}">Github</a> - <a href="{{s.openapi}}">OpenAPI</a> - <a href="{{s.openapi_cache}}">OpenAPI Cache</a></div>
+        {% endfor %}
+    </body>
+</html>

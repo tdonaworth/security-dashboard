@@ -1,4 +1,9 @@
-*.json
-services.txt
+output/*.txt
+output/*.json
 .idea
 .DS_Store
+apitesting
+.vscode
+__pycache__/**
+**/__pycache__
+venv
