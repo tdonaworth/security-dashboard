@@ -1,5 +1,8 @@
 import time
 from rq import get_current_job
+from app import app
+
+app = 
 
 def example(seconds):
     job = get_current_job()
