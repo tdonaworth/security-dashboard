@@ -1,10 +1,11 @@
 import redis
 import rq
+from app import db
 
 class Task(db.Model):
     id          = db.Column(db.String(36), primary_key=True)
     name        = db.Column(db.String(128), index=True)
-    description = db.Column(db.String(128))
+    description = db.Column(db.String(128), default='')
     complete    = db.Column(db.Boolean, default=False)
 
     def get_rq_job(self):
