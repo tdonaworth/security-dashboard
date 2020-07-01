@@ -1,9 +1,22 @@
-{% extends "base_min.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>iQIES Security Dashboard</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='/assets/img/favicon.ico') }}">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
     
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
+    
        <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -13,14 +26,25 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <form class="needs-validation" action="" method="post" novalidate>
+                                            {{ form.hidden_tag() }}
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">{{ form.username.label }}</label>
-                                                {{ form.username(class='form-control py-4', id='inputUsername', placeholder='Enter Username') }}
+                                                {{ form.username(class='form-control py-4', id='inputUsername', placeholder='Enter Username', required=true) }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.username.errors %}
+                                                    {{ error }}
+                                                    {% endfor %}                                                
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputPassword">{{ form.password.label }}</label>
-                                                {{ form.password(class='form-control py-4', id='inputPassword', placeholder='Enter password') }}
+                                                {{ form.password(class='form-control py-4', id='inputPassword', placeholder='Enter password', required=true) }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.username.errors %}
+                                                    {{ error }}
+                                                    {% endfor %}  
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
@@ -56,5 +80,25 @@
                 </footer>
             </div>
         </div>
-        
-{% endblock %}
+        <script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+</body>
+</html>

@@ -8,100 +8,18 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>iQIES Security Dashboard</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='/assets/img/favicon.ico') }}">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Top Navbar -->
-        <a class="navbar-brand" href="{{ url_for('index') }}">iQIES Security</a>
-    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
-        <i class="fas fa-bars"></i>
-    </button>
-    <!-- Navbar Search-->
-    <!--
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-            </div>
-        </div>
-    </form>
-    -->
-    <!-- Navbar-->
-    <ul class="navbar-nav ml-auto ml-md-0">
-       
-            <a href="{{ url_for('login') }}">Login</a>
-        
-    </ul>
-    </nav>
+    {% include '_topNav.html' %}
     <div id="layoutSidenav">
         <!-- Side Navbar -->
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="{{ url_for('index') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
-                        </a>
-                        <div class="sb-sidenav-menu-heading">Tools</div>
-                        <a class="nav-link" href="{{ url_for('services')}}" >
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Services
-                        </a>
-                        <a class="nav-link" href="{{ url_for('nexus')}}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            NexusIQ
-                        </a>
-                        <a class="nav-link" href="{{ url_for('nexus')}}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Secret Leaks
-                        </a>
-                        <a class="nav-link" href="{{ url_for('nexus')}}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Anchore
-                        </a>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Example
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Nested 1
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Nested 1.1</a>
-                                        <a class="nav-link" href="register.html">Nested 1.2</a>
-                                        <a class="nav-link" href="password.html">Nested 1.3</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError"
-                                    aria-expanded="false" aria-controls="pagesCollapseError">Nested 2
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                                    data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">Nested 2.1</a>
-                                        <a class="nav-link" href="404.html">Nested 2.2</a>
-                                        <a class="nav-link" href="500.html">Nested 2.3</a></nav>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <div class="sb-sidenav-footer">
-                    <!-- Footer Content here-->
-                </div>
-                
-            </nav>
+            {% include '_sideNav.html' %}    
         </div>
         <div id="layoutSidenav_content">
             <main>
@@ -123,7 +41,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='/static/js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 

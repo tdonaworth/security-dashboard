@@ -1,0 +1,64 @@
+<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+        <div class="nav">
+            <div class="sb-sidenav-menu-heading">Core</div>
+            <a class="nav-link" href="{{ url_for('index') }}">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Dashboard
+            </a>
+            <div class="sb-sidenav-menu-heading">Tools</div>
+            <a class="nav-link" href="{{ url_for('services')}}" >
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Services
+            </a>
+            <a class="nav-link" href="{{ url_for('nexus')}}">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                NexusIQ
+            </a>
+            <a class="nav-link" href="{{ url_for('nexus')}}">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Secret Leaks
+            </a>
+            <a class="nav-link" href="{{ url_for('nexus')}}">
+                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                Anchore
+            </a>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                Example
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                        Nested 1
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="login.html">Nested 1.1</a>
+                            <a class="nav-link" href="register.html">Nested 1.2</a>
+                            <a class="nav-link" href="password.html">Nested 1.3</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError"
+                        aria-expanded="false" aria-controls="pagesCollapseError">Nested 2
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
+                        data-parent="#sidenavAccordionPages">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{ url_for('static', filename='examples/401.html') }}">401 Example</a>
+                            <a class="nav-link" href="404.html">Nested 2.2</a>
+                            <a class="nav-link" href="500.html">Nested 2.3</a></nav>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="sb-sidenav-footer">
+        <!-- Footer Content here-->
+        <div class="small">
+        Logged in as: {{ current_user.username }}
+        </div>
+    </div>
+    
+</nav>
