@@ -11,3 +11,7 @@
                 </div>
             </li>
         {% endif %} -->
+
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins
+
+https://blog.theodo.com/2020/05/debug-flask-vscode/

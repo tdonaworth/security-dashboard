@@ -5,7 +5,9 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from redis import Redis
 import rq
+#from debugger import initialize_flask_server_debugger_if_needed
 
+#initialize_flask_server_debugger_if_needed()
 
 app = Flask(__name__)
 app.config.from_object(Config)

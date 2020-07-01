@@ -70,6 +70,8 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+        x = User.query.filter_by(username=form.username.data).first()
+        print(x)
         #flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
