@@ -2,24 +2,24 @@
     <div class="sb-sidenav-menu">
         <div class="nav">
             <div class="sb-sidenav-menu-heading">Core</div>
-            <a class="nav-link" href="{{ url_for('index') }}">
+            <a class="nav-link" href="{{ url_for('main.index') }}">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
             </a>
             <div class="sb-sidenav-menu-heading">Tools</div>
-            <a class="nav-link" href="{{ url_for('services')}}" >
+            <a class="nav-link" href="{{ url_for('main.services')}}" >
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                 Services
             </a>
-            <a class="nav-link" href="{{ url_for('nexus')}}">
+            <a class="nav-link" href="{{ url_for('main.nexus')}}">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 NexusIQ
             </a>
-            <a class="nav-link" href="{{ url_for('nexus')}}">
+            <a class="nav-link" href="{{ url_for('main.nexus')}}">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Secret Leaks
             </a>
-            <a class="nav-link" href="{{ url_for('nexus')}}">
+            <a class="nav-link" href="{{ url_for('main.nexus')}}">
                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                 Anchore
             </a>
