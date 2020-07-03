@@ -3,13 +3,13 @@ from flask import render_template, flash, redirect, url_for, request, g, jsonify
 from flask_login import current_user, login_required
 from app import db
 from app.nexus.nexusresult import NexusResult#, Post, Message, Notification
-from app.main import bp
+from app.nexus import bp
 import os, json
 import sqlite3 as sql
 
-@bp.route('/nexus')
-@bp.route('/nexus/index')
-@login_required
+@bp.route('/')
+@bp.route('/index')
+#@login_required
 def nexus():
     return render_template('nexus/index.html')
 
@@ -57,20 +57,24 @@ def addLatestRec():
             yarn_log     = request.form['yarn_log']
             
             with sql.connect("latestDatabase.db") as con:
-                cur = con.cursor()
-                
-                cur.execute("REPLACE INTO NEXUS_LATEST_RESULTS (docker_tag,service_name,jenkins_url,nexusiq_url,yarn_log) VALUES (?,?,?,?,?)",(docker_tag,service_name,jenkins_url,nexusiq_url,yarn_log) )
-                
-                con.commit()
-                msg = "Record successfully added"
-                print(msg)
+                try:
+                    cur = con.cursor()
+                    
+                    cur.execute("REPLACE INTO NEXUS_LATEST_RESULTS (docker_tag,service_name,jenkins_url,nexusiq_url,yarn_log) \
+                        VALUES (?,?,?,?,?)",(docker_tag,service_name,jenkins_url,nexusiq_url,yarn_log) )
+                    
+                    con.commit()
+                    msg = "Record successfully added"
+                    print(msg)
+                except:
+                    con.rollback()
+                    msg = "error in insert operation"
+                finally:
+                    con.close()
         except:
-            con.rollback()
             msg = "error in insert operation"
-        
         finally:
             return render_template("nexus/result.html",msg = msg)
-            con.close()
 
 @bp.route('/listLatest',methods = ['GET'])
 def listLatest():

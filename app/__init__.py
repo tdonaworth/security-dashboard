@@ -11,6 +11,7 @@ from flask_moment import Moment
 from redis import Redis
 from app.debugger import initialize_flask_server_debugger_if_needed
 
+
 ### Used for inline VS Code debugging - see https://blog.theodo.com/2020/05/debug-flask-vscode/
 initialize_flask_server_debugger_if_needed()
 
@@ -46,6 +47,12 @@ def create_app(config_class=Config):
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
+
+    from app.nexus import bp as nexus_bp
+    app.register_blueprint(nexus_bp, url_prefix='/nexus')
+
+    from app.services import bp as services_bp
+    app.register_blueprint(services_bp, url_prefix='/services')
 
     ### Small work-around for sqlite issues on 'ALTER' see https://github.com/miguelgrinberg/Flask-Migrate/issues/61
     with app.app_context():

@@ -5,25 +5,11 @@ import re
 #from github import Github
 
 DIR = "/swagger/output"
+DIR = '../static/assets/json'
+#uploads_dir = os.path.join(app.instance_path, 'uploads')
 
-def main():
-    # Need to work out the proper repo for this, as each repo gives different results (user or org) 
-    #url = "https://git.hcqis.org/api/v3/user/repos?"
-    url = "https://git.hcqis.org/api/v3/orgs/iQIES/repos?per_page=3000"
-
-    payload = {}
-    headers = {'Authorization': 'token ***REMOVED***'}
-
-    response = requests.request("GET", url, headers=headers, data = payload)
-    if(response.status_code == 200):
-        services = filter_services(response.text)
-        service_names = list(l['name'] for l in services)
-        write_services(service_names) # writes out a txt file with all service names
-        write_openapis(service_names) # writes out <service_name>.json openapi files
-        write_service_json(services) # writes out service.json with details on the services
-        #print(services)
-    else:
-        print('Something bad happened: ' + response.text)
+#def main():
+#   run_job()
 
 def run_job():
     # Need to work out the proper repo for this, as each repo gives different results (user or org) 
@@ -71,7 +57,6 @@ def write_service_json(input=()):
 
 
 def write_services(input = ()):
-    
     f = open(os.getcwd() + DIR + "/services.txt", "w")
     for i in input:
         name = i.replace('iqies', '').replace('service', '').replace('-','').strip()
