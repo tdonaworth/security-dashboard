@@ -7,3 +7,4 @@ apitesting
 __pycache__/**
 **/__pycache__
 venv
+dev.env
