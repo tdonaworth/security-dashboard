@@ -3,12 +3,22 @@ version: "3.4"
 
 services:
   flask-server:
-    image: flask
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - 5050:5050
       - 10001:10001
     volumes:
       - .:/app:cached
+    environment: 
+      - FLASK_APP=secdash.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5050
+      - FLASK_ENV=development
+
+  redis-server:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    volumes:
+      - .redis/config/redis.conf:/redis.conf
+    command: ["redis-server", "/redis.conf"]
