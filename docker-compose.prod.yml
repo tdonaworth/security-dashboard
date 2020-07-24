@@ -1,0 +1,10 @@
+# docker-compose.yml
+version: "3.4"
+
+services:
+  flask-server:
+    environment: 
+      - FLASK_APP=secdash.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - FLASK_RUN_PORT=5050
+      - FLASK_ENV=production
