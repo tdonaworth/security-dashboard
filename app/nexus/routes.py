@@ -74,7 +74,7 @@ def addLatestRec():
         except:
             msg = "error in insert operation"
         finally:
-            return render_template("nexus/result.html",msg = msg)
+            return render_template("nexus/results.html",msg = msg)
 
 @bp.route('/listLatest',methods = ['GET'])
 def listLatest():
