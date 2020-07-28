@@ -45,7 +45,7 @@ def addrec():
 @bp.route('/list', methods = ['GET'])
 def list():
     all_results = NexusResult.query.all()
-    return render_template("nexus/list.html",rows = all_results)
+    return render_template("nexus/list.html",title='All', rows = all_results)
 
 @bp.route('/addLatestRec',methods = ['POST'])
 def addLatestRec():
@@ -87,7 +87,7 @@ def listLatest():
    
    rows = cur.fetchall();
    con.close()
-   return render_template("nexus/listLatest.html",rows = rows)
+   return render_template("nexus/listLatest.html",title = 'Latest', rows = rows)
    
    
 '''
