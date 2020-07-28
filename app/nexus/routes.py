@@ -6,6 +6,7 @@ from app.nexus.nexusresult import NexusResult#, Post, Message, Notification
 from app.nexus import bp
 import os, json
 import sqlite3 as sql
+import sys
 
 @bp.route('/')
 @bp.route('/index')
@@ -13,7 +14,7 @@ import sqlite3 as sql
 def nexus():
     return render_template('nexus/index.html')
 
-@bp.route('/addrec', methods=['GET', 'POST'])
+@bp.route('/addrec', methods=['POST'])
 def addrec():
     if request.method == 'POST':
         try:
@@ -24,8 +25,7 @@ def addrec():
             nexusiq_url  = request.form['nexusiq_url']
             yarn_log     = request.form['yarn_log']
             
-            rec = NexusResult(create_date=create_date, \
-                                docker_tag=docker_tag, \
+            rec = NexusResult(docker_tag=docker_tag, \
                                 service_name=service_name, \
                                 jenkins_url=jenkins_url, \
                                 nexusiq_url=nexusiq_url, \
@@ -34,12 +34,13 @@ def addrec():
             db.session.commit()
             msg = "Record successfully added"
 
-            return render_template("nexus/index.html", msg=msg)
+            return render_template("nexus/results.html", msg=msg)
         except:
             db.session.rollback()
-            msg = "error in insert operation"
+            print('xxx Error xxx - ', sys.exc_info())
+            msg = "error in insert operation: " + sys.exc_info()[0]
         finally:
-            return render_template("nexus/index.html",msg = msg)
+            return render_template("nexus/results.html",msg = msg)
 
 @bp.route('/list', methods = ['GET'])
 def list():

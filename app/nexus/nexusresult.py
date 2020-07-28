@@ -1,11 +1,12 @@
 import redis
 import rq
 from datetime import datetime
+from sqlalchemy.sql import func
 from app import db
 
 class NexusResult(db.Model):
     row_id      = db.Column(db.Integer, primary_key=True)
-    create_date = db.Column(db.DateTime, default=datetime.utcnow())
+    create_date = db.Column(db.DateTime(timezone=True), nullable=False, default=func.now())
     docker_tag  = db.Column(db.String(20), default='')
     service_name= db.Column(db.String(30), default='')
     jenkins_url = db.Column(db.String(200), default='')
