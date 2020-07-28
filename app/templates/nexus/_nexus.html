@@ -1,16 +1,16 @@
 <div class="card mb-4">
-    <div class="card-header"><i class="fas fa-table mr-1"></i>Nexus Findings</div>
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Nexus {{ title }} Findings</div>
     <div class="card-body">
         <div class="table-responsive">
             <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
                 <tr>
                     <th></th>
-                    <th><input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Search for Scan Date.." title="Type in a Scan Date"></th>
-                    <th><input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search for Docker Tag.." title="Type in a Docker Tag"></th>
-                    <th><input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="Search for Service.." title="Type in a service name"></th>
+                    <th><input type="text" id="myInput1" onkeyup="searchFunction('myInput1', 1)" placeholder="Search for Scan Date.." title="Type in a Scan Date"></th>
+                    <th><input type="text" id="myInput2" onkeyup="searchFunction('myInput2', 2)" placeholder="Search for Docker Tag.." title="Type in a Docker Tag"></th>
+                    <th><input type="text" id="myInput3" onkeyup="searchFunction('myInput3', 3)" placeholder="Search for Service.." title="Type in a service name"></th>
                     <th></th>
                     <th></th>
-                    <th></th>
+                    <th><input type="text" id="myInput4" onkeyup="searchFunction('myInput4', 6)" placeholder="Search for Components.." title="Type in a component name"></th>
                 </tr>
                 <tr class="header">
                     <th>Row ID</th>
@@ -24,18 +24,21 @@
                 
                 {% for row in rows %}
                     <tr>
-                    <td style="vertical-align:top">{{row["row_id"]}}</td>
-                    <td style="vertical-align:top">{{row["create_date"]}}</td>
-                    <td style="vertical-align:top">{{row["docker_tag"]}}</td>
-                    <td style="vertical-align:top">{{row["service_name"]}}</td>
-                    <td style="vertical-align:top"><a href="{{ row['jenkins_url'] }}" target="_blank">Jenkins URL</td>
-                    <td style="vertical-align:top"><a href="{{ row['nexusiq_url'] }}" target="_blank">Nexus IQ URL - {{row["service_name"]}}</A></td>	
-                    <td>
-                    <button type="button" class="collapsible btn btn-info" data-toggle="collapse" data-target="#collapseYarn" aria-controls="collapseYarn" aria-expanded="false">Expand {{ row["service_name"] }}</button>
-                        <div class="collapse" id="collapseYarn">
-                            <div class="card card-body"><code>{{ row["yarn_log"] }}</code></div>
-                        </div>
-                    </td>	
+                        <td style="vertical-align:top">{{row["row_id"]}}</td>
+                        <td style="vertical-align:top">{{row["create_date"]}}</td>
+                        <td style="vertical-align:top">{{row["docker_tag"]}}</td>
+                        <td style="vertical-align:top">{{row["service_name"]}}</td>
+                        <td style="vertical-align:top"><a href="{{ row['jenkins_url'] }}" target="_blank">Jenkins URL</td>
+                        <td style="vertical-align:top"><a href="{{ row['nexusiq_url'] }}" target="_blank">Nexus IQ URL - {{row["service_name"]}}</A></td>	
+                        <td>
+                            <a class="btn btn-info" data-toggle="collapse" href="#collapseYarn{{row['row_id']}}" 
+                            role="button" aria-expanded="false" aria-conrols="collapseYarn{{row['row_id']}}">
+                                Expand {{ row["service_name"] }}
+                            </a>
+                            <div class="collapse" id="collapseYarn{{row['row_id']}}">
+                                <div class="card card-body"><code>{{ row["yarn_log"] }}</code></div>
+                            </div>
+                        </td>	
                     </tr>
                 {% endfor %}
             </table>
@@ -43,67 +46,14 @@
 <a href = "{{ url_for('nexus.nexus') }}">Go back to home page</a>
 
 <script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
-    }
-
-    function myFunction1() {
+    function searchFunction(elemID, cellIndex) {
         var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput1");
+        input = document.getElementById(elemID);
         filter = input.value.toUpperCase();
         table = document.getElementById("myTable");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }       
-        }
-    }
-
-    function myFunction2() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput2");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[2];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }       
-        }
-    }
-
-    function myFunction3() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput3");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[3];
+            td = tr[i].getElementsByTagName("td")[cellIndex];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
