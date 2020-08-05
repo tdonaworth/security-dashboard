@@ -21,7 +21,8 @@ class SwaggerJob():
         if(response.status_code == 200):
             services = SwaggerJob.filter_services(response.text)
             service_names = list(l['name'] for l in services)
-            SwaggerJob.write_services(service_names) # writes out a txt file with all service names
+            SwaggerJob.write_services_txt(service_names) # writes out a txt file with all service names
+            SwaggerJob.write_services_csv(service_names) # writes out a csv file with all service names
             SwaggerJob.write_openapis(service_names) # writes out <service_name>.json openapi files
             SwaggerJob.write_service_json(services) # writes out service.json with details on the services
             #print(services)
@@ -54,13 +55,20 @@ class SwaggerJob():
             json.dump(services, json_file)
 
     @staticmethod        
-    def write_services(input = ()):
-        
+    def write_services_txt(input = ()):
         f = open(os.getcwd() + DIR + "/services.txt", "w")
         for i in input:
             name = i.replace('iqies', '').replace('service', '').replace('-','').strip()
             #print(name)
             f.write(name + os.linesep)
+    
+    @staticmethod        
+    def write_services_csv(input = ()):
+        f = open(os.getcwd() + DIR + "/services.csv", "w")
+        for i in input:
+            name = i.replace('iqies', '').replace('service', '').replace('-','').strip()
+            #print(name)
+            f.write(name + ',')
 
     @staticmethod
     def write_openapis(input = ()):
