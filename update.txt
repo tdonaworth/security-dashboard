@@ -1,0 +1,8 @@
+Step 1. SSH into security-box EC2 (you should already know how to do this and have access)
+Step 2. Stop the current containers with compose down
+    > docker-compose down
+Step 3. Pull updates with git
+    > git Pull
+Step 4. Restart containers with compose
+    > docker-compose up -d
+
