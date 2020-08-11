@@ -9,6 +9,7 @@ services:
       - 10001:10001
     volumes:
       - .:/app:cached
+      - /var/anchore-reports:/app/anchore-reports
     environment: 
       - FLASK_APP=secdash.py
       - FLASK_RUN_HOST=0.0.0.0
@@ -21,5 +22,4 @@ services:
       - 6379:6379
     volumes:
       - .redis/config/redis.conf:/redis.conf
-      - /var/anchore-reports/:/anchore-reports/
     command: ["redis-server", "/redis.conf"]
