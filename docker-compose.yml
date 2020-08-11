@@ -8,8 +8,8 @@ services:
       - 5050:5050
       - 10001:10001
     volumes:
-      - .:/app:cached
-      - /var/anchore-reports:/app/anchore-reports
+      - .:/app
+      - /var/anchore-reports:/app/app/anchore-reports
     environment: 
       - FLASK_APP=secdash.py
       - FLASK_RUN_HOST=0.0.0.0
