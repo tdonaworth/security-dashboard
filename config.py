@@ -12,7 +12,7 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     REDIS_URL               = os.getenv('REDIS_URL') or 'redis://'
     # SECRET FOR CSRF TOKEN
-    SECRET_KEY              = "af8a8338jf#fFef%a9a9933"
+    SECRET_KEY              = os.getenv('CSRF_KEY')
 
     #S MTP MAIL SETTINGS
     SMTP_SERVER             = os.getenv('SMTP_SERVER') # Set to None to disable email error logs
@@ -20,7 +20,7 @@ class Config(object):
     SMTP_USE_TLS            = os.getenv('SMTP_USE_TLS') is not None
     SMTP_USERNAME           = os.getenv('SMTP_USERNAME')
     SMTP_PASSWORD           = os.getenv('SMTP_PASSWORD')
-    ADMINS                  = ['tdonaworth@flexion.us']
+    ADMINS                  = os.getenv('ADMIN_EMAIL')
 
     # API TOKENS (DEV)
     GITHUB_TOKEN            = os.getenv('GITHUB_TOKEN')
