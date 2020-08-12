@@ -21,3 +21,6 @@ class Config(object):
     SMTP_USERNAME           = os.getenv('SMTP_USERNAME')
     SMTP_PASSWORD           = os.getenv('SMTP_PASSWORD')
     ADMINS                  = ['tdonaworth@flexion.us']
+
+    # API TOKENS (DEV)
+    GITHUB_TOKEN            = os.getenv('GITHUB_TOKEN')
