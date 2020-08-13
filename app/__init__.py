@@ -51,6 +51,9 @@ def create_app(config_class=Config):
     from app.nexus import bp as nexus_bp
     app.register_blueprint(nexus_bp, url_prefix='/nexus')
 
+    from app.anchore import bp as anchore_bp
+    app.register_blueprint(anchore_bp, url_prefix='/anchore')
+
     from app.services import bp as services_bp
     app.register_blueprint(services_bp, url_prefix='/services')
 
