@@ -1,6 +1,17 @@
 <div class="card mb-4">
     <div class="card-header"><i class="fas fa-table mr-1"></i>Anchore Findings</div>
     <div class="card-body">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Anchore Scans
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for s in services %}
+                <a class="dropdown-item" href="{{ url_for('anchore.anchore', service=s) }}">{{ s }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <br/>
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
