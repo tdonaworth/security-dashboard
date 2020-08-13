@@ -15,11 +15,12 @@ services:
       - FLASK_RUN_HOST=0.0.0.0
       - FLASK_RUN_PORT=5050
       - FLASK_ENV=development
-
-  redis-server:
-    image: redis:latest
-    ports:
-      - 6379:6379
-    volumes:
-      - .redis/config/redis.conf:/redis.conf
-    command: ["redis-server", "/redis.conf"]
+  
+  # Temp disable
+  #redis-server:
+  #  image: redis:4.0.12
+  #  ports:
+  #    - 36511:36511
+  #  volumes:
+  #    - .redis/config/redis.conf:/redis.conf
+  #  command: ["redis-server", "redis.confg requirepass atmv4cajDbQimGXgQ6uyEpghfLNz4hG1l6Nw38LS"]
