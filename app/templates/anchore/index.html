@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Anchore Scans
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for s in services %}
+            <a class="dropdown-item" href="{{ url_for('anchore.anchore', service=s) }}">{{ s }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'anchore/_anchore.html' %}
+</div>
+{% endblock %}
