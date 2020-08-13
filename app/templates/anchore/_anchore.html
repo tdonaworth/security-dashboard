@@ -1,0 +1,40 @@
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Anchore Findings</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Package Name</th>
+                        <th>Vuln</th>
+                        <th>NVD Data</th>
+                        <th>Fix</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Package Name</th>
+                        <th>Vuln</th>
+                        <th>NVD Data</th>
+                        <th>Fix</th>
+                        <th>URL</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% if findings is defined %}
+                        {% for v in findings['vulnerabilities'] %}
+                        <tr>
+                            <td>{{ v['package_name'] }}</td>
+                            <td>{{ v['vuln'] }}</a></td>
+                            <td>{{ v['nvd_data'] }}</td>
+                            <td>{{ v['fix'] }}</td>
+                            <td><a href="{{ v['url'] }}">Details</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
