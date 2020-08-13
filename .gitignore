@@ -8,3 +8,6 @@ __pycache__/**
 **/__pycache__
 venv
 dev.env
+app.db
+database.db
+latestDatabase.db
