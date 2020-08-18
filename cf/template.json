@@ -1,0 +1,127 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template will retain EC2 Private IPv4 address",
+    "Parameters": {
+      "ConsulInstanceType": {
+        "Type": "String",
+        "Description": "EC2 instance type",
+        "AllowedValues": [
+          "m5.large",
+          "t2.micro",
+          "t2.small",
+          "t3.small",
+          "t3.large",
+          "m5.xlarge",
+          "m5.2xlarge",
+          "m5.4xlarge",
+          "m5.10xlarge"
+        ],
+        "ConstraintDescription": "Choose an instance type.",
+        "Default": "m5.large"
+      },
+      "AZ": {
+        "Type": "AWS::EC2::AvailabilityZone::Name",
+        "Description": "Enter the Availabilty Zone"
+      },
+      "Imageid": {
+        "Type": "AWS::EC2::Image::Id",
+        "Description": "Enter the Imageid"
+      },
+      "InstanceRole": {
+        "Type": "String",
+        "Description": "Enter InstanceRole"
+      },
+      "Subnetid1": {
+        "Type": "AWS::EC2::Subnet::Id",
+        "Description": "Enter app SubnetId"
+      },
+      "SecurityGroupId": {
+        "Type": "List<AWS::EC2::SecurityGroup::Id>",
+        "Description": "Enter security Group list seperated by comma"
+      },
+      "Name": {
+        "Type": "String",
+        "Description": "Enter Instance Name"
+      },
+      "Owner": {
+        "Type": "String",
+        "Description": "Enter Owner for the instance"
+      },
+      "Application": {
+        "Type": "String",
+        "Description": "Enter Application Name"
+      }
+    },
+    "Resources": {
+      "EC2TestServer": {
+        "Type": "AWS::EC2::Instance",
+        "Properties": {
+          "BlockDeviceMappings": [{
+              "DeviceName": "/dev/sda1",
+              "Ebs": {
+                "DeleteOnTermination": "true",
+                "VolumeSize": "80"
+              }
+            }
+          ],
+          "EbsOptimized": "False",
+          "InstanceType": {
+            "Ref": "ConsulInstanceType"
+          },
+          "AvailabilityZone": {
+            "Ref": "AZ"
+          },
+          "ImageId": {
+            "Ref": "Imageid"
+          },
+          "IamInstanceProfile": {
+            "Ref": "InstanceRole"
+          },
+          "SecurityGroupIds": {
+            "Ref": "SecurityGroupId"
+          },
+          "SubnetId": {
+            "Ref": "Subnetid1"
+          },
+          "Tenancy": "default",
+          "UserData": {
+            "Fn::Base64": {
+              "Fn::Join": [
+                "", [
+                  "#!/bin/bash\n",
+                  "/root/.deploy.sh\n",
+                  "exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1", "\n",
+                  "exec 5> >(logger -t $0)\n",
+                  "BASH_XTRACEFD='5'\n",
+                  "PS4='$LINENO: '\n",
+                  "set -x\n",
+                  "echo '%iqs-ado-posix             ALL=(ALL)       NOPASSWD: ALL' > /etc/sudoers.d/01-ado-sudo\n",
+                  "echo 'adoadmin             ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers.d/01-ado-sudo\n",
+                  "restorecon -R -v /etc/sudoers.d/\n"
+                ]
+              ]
+            }
+          },
+          "Tags": [{
+              "Key": "Name",
+              "Value": {
+                "Ref": "Name"
+              }
+            },
+            {
+              "Key": "Owner",
+              "Value": {
+                "Ref": "Owner"
+              }
+            },
+            {
+              "Key": "Application",
+              "Value": {
+                "Ref": "Application"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
