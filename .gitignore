@@ -11,3 +11,4 @@ dev.env
 app.db
 database.db
 latestDatabase.db
+/terraform/terraform.tfvars
