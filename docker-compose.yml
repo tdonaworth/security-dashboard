@@ -3,6 +3,8 @@ version: "3.4"
 
 services:
   flask-server:
+    container_name: security-dashboard
+    hostname: secdash
     build: .
     ports:
       - 5050:5050
@@ -16,6 +18,18 @@ services:
       - FLASK_RUN_PORT=5050
       - FLASK_ENV=development
   
+  reverse:
+    container_name: reverse
+    hostname: reverse
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/nginx/conf:/etc/nginx
+      - /var/nginx/ssl:etc/ssl/private
+      - /var/nginx/content:/usr/share/nginx/html
+      
   # Temp disable
   #redis-server:
   #  image: redis:4.0.12
