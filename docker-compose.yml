@@ -27,9 +27,9 @@ services:
       - 443:443
     volumes:
       - /var/nginx/conf:/etc/nginx
-      - /var/nginx/ssl:etc/ssl/private
+      - /var/nginx/ssl:/etc/ssl/private
       - /var/nginx/content:/usr/share/nginx/html
-      
+
   # Temp disable
   #redis-server:
   #  image: redis:4.0.12
