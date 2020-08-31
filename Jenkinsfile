@@ -6,7 +6,7 @@ pipeline {
   }
   environment {
     OUTPUT_FILE = 'findings.html'
-    TARGET_URL = 'https://sbx-iqies.hcqis.org' 
+    TARGET_URL = 'https://sbx-iqies.hcqis.org'
   }
 
   stages {
@@ -31,7 +31,7 @@ pipeline {
 	    /*
 	    // Use either the Active Scan (below) or the Quick Scan command (above)
 	    // The commands below allow for more configuration than what Quick Scan can provide
-            sh 'docker exec zap zap-cli -p 8090 -v open-url $TARGET_URL'      
+            sh 'docker exec zap zap-cli -p 8090 -v open-url $TARGET_URL'
 	    sh 'docker exec zap zap-cli -p 8090 -v active-scan -r $TARGET_URL'
 	    sh 'docker exec zap zap-cli -p 8090 -v spider -r $TARGET_URL'
 	    sh 'docker exec zap zap-cli -p 8090 -v ajax-spider -r $TARGET_URL'

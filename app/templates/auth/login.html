@@ -15,8 +15,8 @@
 </head>
 
 <body class="sb-nav-fixed">
-    
-    
+
+
        <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -34,7 +34,7 @@
                                                 <div class="invalid-feedback">
                                                     {% for error in form.username.errors %}
                                                     {{ error }}
-                                                    {% endfor %}                                                
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -43,12 +43,12 @@
                                                 <div class="invalid-feedback">
                                                     {% for error in form.username.errors %}
                                                     {{ error }}
-                                                    {% endfor %}  
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
-                                                    {{ form.remember_me(class='custom-control-input', id='rememberMeCheck') }} 
+                                                    {{ form.remember_me(class='custom-control-input', id='rememberMeCheck') }}
                                                     <label class="custom-control-label" for="rememberPasswordCheck">{{form.remember_me.label }}</label>
                                                 </div>
                                             </div>

@@ -1,3 +1,2 @@
-* * * * * echo "Hello world" >> /var/log/cron.log 2>&1 
-*/15 * * * * /swagger/getOpenApiJson.sh >> /var/log/cron.log 2>&1 
-
+* * * * * echo "Hello world" >> /var/log/cron.log 2>&1
+*/15 * * * * /swagger/getOpenApiJson.sh >> /var/log/cron.log 2>&1

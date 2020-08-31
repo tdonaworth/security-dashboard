@@ -7,7 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 
-# Set FLASK variable 
+# Set FLASK variable
 ENV FLASK_APP secdash.py
 ENV FLASK_RUN_PORT 5050
 ENV FLASK_RUN_HOST 0.0.0.0
