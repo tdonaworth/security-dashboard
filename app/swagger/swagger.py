@@ -19,7 +19,7 @@ def run_job():
     url = "https://git.hcqis.org/api/v3/orgs/iQIES/repos?per_page=3000"
 
     payload = {}
-    headers = {"Authorization": "token ***REMOVED***"}
+    headers = {"Authorization": "token 4299cb0fa44f9a3a172581c6e4190fa9cf00c008"}
 
     response = requests.request("GET", url, headers=headers, data=payload)
     if response.status_code == 200:
