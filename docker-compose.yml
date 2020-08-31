@@ -1,36 +1,87 @@
 # docker-compose.yml
-version: "3.4"
+version: "3.5"
 
 services:
-  flask-server:
-    container_name: security-dashboard
-    hostname: secdash
+  docker-secdash:
+    container_name: docker-secdash
+    hostname: docker-secdash
     build: .
     ports:
-      - 5050:5050
       - 10001:10001
+      - 5050:5050
+    networks:
+      - network1
     volumes:
       - .:/app
-      - /var/anchore-reports:/app/app/anchore-reports
-    environment: 
+      - ./app/anchore-reports:/app/app/anchore-reports
+    environment:
       - FLASK_APP=secdash.py
       - FLASK_RUN_HOST=0.0.0.0
       - FLASK_RUN_PORT=5050
       - FLASK_ENV=development
-  
+      - SECRET_KEY=asdf1234qwer5678 # used for dev only
+      - CSRF_KEY=asdf1234qwer5678 # used for dev only
+
   reverse:
     container_name: reverse
     hostname: reverse
-    image: nginx
+    depends_on:
+      - docker-secdash
+      - docker-nexus
+    build: ./nginx
+    #image: nginx:1.18.0
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - /var/nginx/conf:/etc/nginx
-      - /var/nginx/ssl:/etc/ssl/private
-      - /var/nginx/content:/usr/share/nginx/html
+    networks:
+      - network1
+    restart: always
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRUTAL_PORT=80
+    #volumes:
+    #  - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+    #  - ./nginx/ssl:/etc/ssl/private
+    #  - ./nginx/content:/usr/share/nginx/html
 
-  # Temp disable
+  docker-nexus:
+    container_name: docker-nexus
+    hostname: docker-nexus
+    image: nexus-dashboard:latest
+    ports:
+      - 5000:5000
+    networks:
+      - network1
+    volumes:
+      - ../nexus-dashboard/Python_webserver:/project
+
+  docker-openapi:
+    container_name: docker-openapi
+    hostname: docker-openapi
+    build: ./swagger/swagger
+    ports:
+      - 4500:4500
+    networks:
+      - network1
+
+  docker-swaggerui:
+    container_name: docker-swaggerui
+    hostname: docker-swaggerui
+    image: swaggerapi/swagger-ui
+    restart: unless-stopped
+    ports:
+      - 4600:8080
+    networks:
+      - network1
+    environment:
+      - API_URL="http://docker-openapi:4500/patientassessment.json"
+
+networks:
+  network1:
+    name: security-tool-network
+
+
+      # Temp disable
   #redis-server:
   #  image: redis:4.0.12
   #  ports:

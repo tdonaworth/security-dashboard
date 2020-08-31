@@ -5,4 +5,3 @@ Step 3. Pull updates with git
     > git Pull
 Step 4. Restart containers with compose
     > docker-compose up -d
-

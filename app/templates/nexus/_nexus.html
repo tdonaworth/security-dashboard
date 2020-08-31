@@ -21,7 +21,7 @@
                     <th>NexusIQ URL</th>
                     <th>Yarn Log</th>
                 </tr>
-                
+
                 {% for row in rows %}
                     <tr>
                         <td style="vertical-align:top">{{row["row_id"]}}</td>
@@ -29,16 +29,16 @@
                         <td style="vertical-align:top">{{row["docker_tag"]}}</td>
                         <td style="vertical-align:top">{{row["service_name"]}}</td>
                         <td style="vertical-align:top"><a href="{{ row['jenkins_url'] }}" target="_blank">Jenkins URL</td>
-                        <td style="vertical-align:top"><a href="{{ row['nexusiq_url'] }}" target="_blank">Nexus IQ URL - {{row["service_name"]}}</A></td>	
+                        <td style="vertical-align:top"><a href="{{ row['nexusiq_url'] }}" target="_blank">Nexus IQ URL - {{row["service_name"]}}</A></td>
                         <td>
-                            <a class="btn btn-info" data-toggle="collapse" href="#collapseYarn{{row['row_id']}}" 
+                            <a class="btn btn-info" data-toggle="collapse" href="#collapseYarn{{row['row_id']}}"
                             role="button" aria-expanded="false" aria-conrols="collapseYarn{{row['row_id']}}">
                                 Expand {{ row["service_name"] }}
                             </a>
                             <div class="collapse" id="collapseYarn{{row['row_id']}}">
                                 <div class="card card-body"><code>{{ row["yarn_log"] }}</code></div>
                             </div>
-                        </td>	
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
@@ -61,7 +61,7 @@
                 } else {
                     tr[i].style.display = "none";
                 }
-            }       
+            }
         }
     }
 
