@@ -47,7 +47,7 @@ services:
   docker-nexus:
     container_name: docker-nexus
     hostname: docker-nexus
-    image: nexus-dashboard:latest
+    build: ../nexus-dashboard/Python_webserver
     ports:
       - 5000:5000
     networks:
@@ -58,7 +58,7 @@ services:
   docker-openapi:
     container_name: docker-openapi
     hostname: docker-openapi
-    build: ./swagger/swagger
+    build: ../swagger/swagger
     ports:
       - 4500:4500
     networks:
