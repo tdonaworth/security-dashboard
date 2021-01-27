@@ -23,3 +23,5 @@ jobs:
         env:
           DEFAULT_BRANCH: nightly
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_CLOUDFORMATION: false
+          FILTER_REGEX_INCLUDE: .*app/.*
