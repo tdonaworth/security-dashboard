@@ -16,6 +16,7 @@ print("Table created successfully")
 conn.close()
 
 ####
-## This needs refactored - stop-gap for transitioning old nexus-dashboard.
-## This only creates the 'latestDatabase.db' the 'main' (app.db) is created and handled by SqlAlchemy
-## Will refactor lator to include a 'latest' table within app.db, and query it for the two nexus calls.
+# This needs refactored - stop-gap for transitioning old nexus-dashboard.
+# This only creates the 'latestDatabase.db' the 'main' (app.db) is created and handled by SqlAlchemy
+# Will refactor lator to include a 'latest' table within app.db, and query
+# it for the two nexus calls.

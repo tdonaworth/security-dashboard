@@ -14,7 +14,10 @@ from app import db
 
 # from app.anchore import AnchoreResult
 from app.anchore import bp
-import os, json, glob, re
+import os
+import json
+import glob
+import re
 import sqlite3 as sql
 import sys
 import requests

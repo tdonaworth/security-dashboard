@@ -14,7 +14,8 @@ from app import db
 from app.main.forms import EditProfileForm
 from app.models import User, Task  # , Post, Message, Notification
 from app.services import bp
-import os, json
+import os
+import json
 
 
 @bp.route("/")
@@ -40,5 +41,5 @@ def services_json(service):
         with open("{}/swagger/output/{}.json".format(os.getcwd(), service)) as f:
             service = json.load(f)
             return jsonify(service)
-    except:
+    except BaseException:
         return render_template("errors/404.html"), 404

@@ -13,7 +13,8 @@ from flask_login import current_user, login_required
 from app import db
 from app.nexus.nexusresult import NexusResult  # , Post, Message, Notification
 from app.nexus import bp
-import os, json
+import os
+import json
 import sqlite3 as sql
 import sys
 
@@ -48,7 +49,7 @@ def addrec():
             msg = "Record successfully added"
 
             return render_template("nexus/results.html", msg=msg)
-        except:
+        except BaseException:
             db.session.rollback()
             print("xxx Error xxx - ", sys.exc_info())
             msg = "error in insert operation: " + sys.exc_info()[0]
@@ -85,12 +86,12 @@ def addLatestRec():
                     con.commit()
                     msg = "Record successfully added"
                     print(msg)
-                except:
+                except BaseException:
                     con.rollback()
                     msg = "error in insert operation"
                 finally:
                     con.close()
-        except:
+        except BaseException:
             msg = "error in insert operation"
         finally:
             return render_template("nexus/results.html", msg=msg)

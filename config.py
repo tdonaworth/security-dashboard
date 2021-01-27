@@ -18,7 +18,8 @@ class Config(object):
     SECRET_KEY = os.getenv("CSRF_KEY")
 
     # S MTP MAIL SETTINGS
-    SMTP_SERVER = os.getenv("SMTP_SERVER")  # Set to None to disable email error logs
+    # Set to None to disable email error logs
+    SMTP_SERVER = os.getenv("SMTP_SERVER")
     SMTP_PORT = os.getenv("SMTP_PORT") or 587  # 25 for insecure port
     SMTP_USE_TLS = os.getenv("SMTP_USE_TLS") is not None
     SMTP_USERNAME = os.getenv("SMTP_USERNAME")

@@ -20,8 +20,10 @@ def main():
     if response.status_code == 200:
         services = filter_services(response.text)
         service_names = list(l["name"] for l in services)
-        write_services(service_names)  # writes out a txt file with all service names
-        write_openapis(service_names)  # writes out <service_name>.json openapi files
+        # writes out a txt file with all service names
+        write_services(service_names)
+        # writes out <service_name>.json openapi files
+        write_openapis(service_names)
         write_service_json(
             services
         )  # writes out service.json with details on the services
@@ -42,8 +44,10 @@ def run_job():
     if response.status_code == 200:
         services = filter_services(response.text)
         service_names = list(l["name"] for l in services)
-        write_services(service_names)  # writes out a txt file with all service names
-        write_openapis(service_names)  # writes out <service_name>.json openapi files
+        # writes out a txt file with all service names
+        write_services(service_names)
+        # writes out <service_name>.json openapi files
+        write_openapis(service_names)
         write_service_json(
             services
         )  # writes out service.json with details on the services
@@ -132,7 +136,8 @@ if __name__ == "__main__":
     main()
 
 
-# Tried a different path using the PyGithub library, but it was making writing back out difficult.
+# Tried a different path using the PyGithub library, but it was making
+# writing back out difficult.
 
 """
 def main():

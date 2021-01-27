@@ -1,3 +1,4 @@
+from app import models
 import os
 import rq
 import logging
@@ -12,7 +13,8 @@ from redis import Redis
 from app.debugger import initialize_flask_server_debugger_if_needed
 
 
-### Used for inline VS Code debugging - see https://blog.theodo.com/2020/05/debug-flask-vscode/
+# Used for inline VS Code debugging - see
+# https://blog.theodo.com/2020/05/debug-flask-vscode/
 initialize_flask_server_debugger_if_needed()
 
 db = SQLAlchemy()
@@ -64,7 +66,8 @@ def create_app(config_class=Config):
 
     app.register_blueprint(services_bp, url_prefix="/services")
 
-    ### Small work-around for sqlite issues on 'ALTER' see https://github.com/miguelgrinberg/Flask-Migrate/issues/61
+    # Small work-around for sqlite issues on 'ALTER' see
+    # https://github.com/miguelgrinberg/Flask-Migrate/issues/61
     with app.app_context():
         if db.engine.url.drivername == "sqlite":
             migrate.init_app(app, db, render_as_batch=True)
@@ -107,6 +110,3 @@ def create_app(config_class=Config):
         app.logger.info("SecDash startup")
 
     return app
-
-
-from app import models
