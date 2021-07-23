@@ -19,7 +19,8 @@ def run_job():
     url = "https://qnetgit.cms.gov/api/v3/orgs/iQIES/repos?per_page=3000"
 
     payload = {}
-    headers = {"Authorization": "token 4299cb0fa44f9a3a172581c6e4190fa9cf00c008"}
+    GH_PAT = os.getenv("GH_PAT") # Pulls in local env GH_PAT, ensure this is set (#> export GH_PAT=<PAT>)
+    headers = {"Authorization": f"token {GH_PAT}"}
 
     response = requests.request("GET", url, headers=headers, data=payload)
     if response.status_code == 200:
@@ -34,7 +35,7 @@ def run_job():
         )  # writes out service.json with details on the services
         # print(services)
     else:
-        print("Something bad happened: " + response.text)
+        print(f"Something bad happened: {response.text}")
 
 
 def filter_services(input):
@@ -59,10 +60,8 @@ def write_service_json(input=()):
             "created_at": s["created_at"],
             "updated_at": s["updated_at"],
             "github": s["html_url"],
-            "openapi": "https://test2-iqies.hcqis.org/api/{}/openapi.json".format(
-                service_name
-            ),
-            "openapi_cache": "http://10.137.177.242:4500/{}.json".format(service_name),
+            "openapi": f"https://test2-iqies.hcqis.org/api/{service_name}/openapi.json",
+            "openapi_cache": f"http://10.137.177.242:4500/{service_name}.json",
         }
         # print(service)
         services.append(service)
@@ -83,7 +82,7 @@ def write_openapis(input=()):
     for i in input:
         service = i.replace("iqies", "").replace("service", "").replace("-", "").strip()
         # print(service)
-        url = "https://test2-iqies.hcqis.org/api/{}/openapi.json".format(service)
+        url = f"https://test2-iqies.hcqis.org/api/{service}/openapi.json"
         # print(url)
         payload = {}
         authCookie = authenticate()
