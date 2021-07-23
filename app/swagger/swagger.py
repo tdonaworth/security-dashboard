@@ -5,18 +5,18 @@ import re
 
 # from github import Github
 
-DIR = "/swagger/output"
-DIR = "../static/assets/json"
+DIR = ""
+# DIR = "./static/assets/json"
 # uploads_dir = os.path.join(app.instance_path, 'uploads')
 
-# def main():
-#   run_job()
+def main():
+  run_job()
 
 
 def run_job():
     # Need to work out the proper repo for this, as each repo gives different results (user or org)
     # url = "https://git.hcqis.org/api/v3/user/repos?"
-    url = "https://git.hcqis.org/api/v3/orgs/iQIES/repos?per_page=3000"
+    url = "https://qnetgit.cms.gov/api/v3/orgs/iQIES/repos?per_page=3000"
 
     payload = {}
     headers = {"Authorization": "token 4299cb0fa44f9a3a172581c6e4190fa9cf00c008"}
@@ -86,9 +86,9 @@ def write_openapis(input=()):
         url = "https://test2-iqies.hcqis.org/api/{}/openapi.json".format(service)
         # print(url)
         payload = {}
-        kongToken = authenticate()
+        authCookie = authenticate()
         headers = {"Content-Type": "application/json"}
-        cookies = {"iqies-token": kongToken}
+        cookies = authCookie #{"iqies-token": kongToken}
         response = requests.request(
             "GET", url, headers=headers, data=json.dumps(payload), cookies=cookies
         )
@@ -105,8 +105,9 @@ def authenticate():
     headers = {"Content-Type": "application/json"}
     response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
     if response.status_code == 200:
-        kongToken = json.loads(response.text)["kongToken"]
-        return kongToken
+        #print(response.text)
+        #kongToken = json.loads(response.text)["kongToken"]
+        return response.cookies
     else:
         exit()
 
