@@ -9,6 +9,19 @@ DIR = ""
 # DIR = "./static/assets/json"
 # uploads_dir = os.path.join(app.instance_path, 'uploads')
 
+BASE_URL = os.getenv("IQIES_URL")
+#BASE_URL = "test2-iqies.hcqis.org"
+
+'''
+Will query Github Enterprise (ORG) for all repositories, and filter those which fit the service name
+notation '{org}-{serviceName}-service'. The {serviceName} will be used to query the running instance
+to get the Swagger API description files (openapi.json), as well as output a services.txt list of all
+services.
+
+Required ENV Vars:
+GHE_PAT - A valid Personal Access Token (PAT) for the instace of Github Enterprise (GHE) you wish to query
+BASE_URL - The base URL used for accessing the running services. Ex. test2-iqies.hcqis.org
+'''
 def main():
   run_job()
 
@@ -19,8 +32,8 @@ def run_job():
     url = "https://qnetgit.cms.gov/api/v3/orgs/iQIES/repos?per_page=3000"
 
     payload = {}
-    GH_PAT = os.getenv("GH_PAT") # Pulls in local env GH_PAT, ensure this is set (#> export GH_PAT=<PAT>)
-    headers = {"Authorization": f"token {GH_PAT}"}
+    GHE_PAT = os.getenv("GHE_PAT") # Pulls in local env GHE_PAT, ensure this is set (#> export GHE_PAT=<PAT>)
+    headers = {"Authorization": f"token {GHE_PAT}"}
 
     response = requests.request("GET", url, headers=headers, data=payload)
     if response.status_code == 200:
@@ -33,7 +46,6 @@ def run_job():
         write_service_json(
             services
         )  # writes out service.json with details on the services
-        # print(services)
     else:
         print(f"Something bad happened: {response.text}")
 
@@ -60,10 +72,9 @@ def write_service_json(input=()):
             "created_at": s["created_at"],
             "updated_at": s["updated_at"],
             "github": s["html_url"],
-            "openapi": f"https://test2-iqies.hcqis.org/api/{service_name}/openapi.json",
+            "openapi": f"https://{BASE_URL}/api/{service_name}/openapi.json",
             "openapi_cache": f"http://10.137.177.242:4500/{service_name}.json",
         }
-        # print(service)
         services.append(service)
 
     with open("{}{}services.json".format(os.getcwd(), DIR), "w") as json_file:
@@ -74,16 +85,13 @@ def write_services(input=()):
     f = open(os.getcwd() + DIR + "/services.txt", "w")
     for i in input:
         name = i.replace("iqies", "").replace("service", "").replace("-", "").strip()
-        # print(name)
         f.write(name + os.linesep)
 
 
 def write_openapis(input=()):
     for i in input:
         service = i.replace("iqies", "").replace("service", "").replace("-", "").strip()
-        # print(service)
-        url = f"https://test2-iqies.hcqis.org/api/{service}/openapi.json"
-        # print(url)
+        url = f"https://{BASE_URL}/api/{service}/openapi.json"
         payload = {}
         authCookie = authenticate()
         headers = {"Content-Type": "application/json"}
@@ -91,21 +99,17 @@ def write_openapis(input=()):
         response = requests.request(
             "GET", url, headers=headers, data=json.dumps(payload), cookies=cookies
         )
-        # print(response)
         if response.status_code == 200:
-            # print(response.text)
             f = open("{}{}/{}.json".format(os.getcwd(), DIR, service), "w")
             f.write(response.text)
 
 
 def authenticate():
-    url = "https://test2-iqies.hcqis.org/api/auth/v1/public/login"
+    url = f"https://{BASE_URL}/api/auth/v1/public/login"
     payload = {"username": "ro-region1", "password": "sdfsdff"}
     headers = {"Content-Type": "application/json"}
     response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
     if response.status_code == 200:
-        #print(response.text)
-        #kongToken = json.loads(response.text)["kongToken"]
         return response.cookies
     else:
         exit()
